@@ -36,9 +36,9 @@ void dfs(int node, int depth, double distance, int start_node)
     visited[node] = 0;
 }
 
-void check_overflow(int edge_count)
+void check_overflow(void)
 {
-    if (edge_count > MAX_EDGES) {
+    if (edge_count > MAX_EDGES || node_count > MAX_NODES) {
         printf("fdin is too many\n");
         exit(1);
     }
@@ -56,28 +56,33 @@ static void destructor() {
     system("leaks -q a.out");
 }
 
-int main()
+void scanf_fnc(int start, int end, double distance)
 {
-    memset(adj_matrix, 0, sizeof(adj_matrix));
     char buffer[256];
-    int start, end;
-    double distance;
-    int i = 0;
-    while (fgets(buffer, sizeof(buffer), stdin)) {
+    while (fgets(buffer, sizeof(buffer), stdin))
+    {
         sscanf(buffer, " %d , %d , %lf ", &start, &end, &distance);
-
-        check_overflow(edge_count);
-
+        check_overflow();
         edges[edge_count].start = start;
         edges[edge_count].end = end;
         edges[edge_count].distance = distance;
         edge_count++;
-
         if (start >= node_count)
             node_count = start + 1;
         if (end >= node_count)
             node_count = end + 1;
     }
+
+}
+
+int main()
+{
+    memset(adj_matrix, 0, sizeof(adj_matrix));
+    int i = 0;
+    int start = 0, end = 0;
+    double distance = 0;
+    scanf_fnc(start, end, distance);
+    check_overflow();
     while(i<edge_count)
     {
         start = edges[i].start;
