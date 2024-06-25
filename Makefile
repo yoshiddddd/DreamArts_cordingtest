@@ -1,7 +1,7 @@
 NAME     = runfile
 CC       = cc
 CFLAGS   = -Wall -Wextra -Werror 
-SRC      = main.c
+SRC      = init.c utils.c dfs.c main.c 
 OBJ      = $(SRC:.c=.o)
 
 all: $(NAME)
